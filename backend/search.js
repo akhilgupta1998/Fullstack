@@ -1,7 +1,17 @@
 import { Client } from "@elastic/elasticsearch";
 
-const client = new Client({
-  node: process.env.ELASTICSEARCH_NODE,
-});
+let client = null;
 
-export default client;
+export function getSearchClient() {
+  if (!process.env.ELASTICSEARCH_URL) {
+    throw new Error("ELASTICSEARCH_URL not configured");
+  }
+
+  if (!client) {
+    client = new Client({
+      node: process.env.ELASTICSEARCH_URL,
+    });
+  }
+
+  return client;
+}
