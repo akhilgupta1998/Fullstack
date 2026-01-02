@@ -16,8 +16,9 @@ app.use(express.json());
  * - Must NEVER crash the app
  * - Used by ECS + ALB
  */
-app.get("/health", async (req, res) => {
-  const services = {};
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
   // Redis check (non-fatal)
   try {
